@@ -1,1 +1,242 @@
+##code to implement linked list using Python.
+class Node:
+    def __init__(self,value): #initialising the node |data_|link_|
+        self.data=value
+        self.link=None
 
+class singleLinkedList:
+    def __init__(self): #initialising the root element
+        self.root=None
+
+    def displayList(self): #for displaying the list elements
+        if self.root is None:
+            print("List is empty")
+            return
+        else:
+            print("List is: ")
+            p=self.root
+            while p is not None:
+                print(p.data," ",end=" ")
+                p=p.link
+            print()
+    def countNode(self):
+        count=0
+        p=self.root
+        while p is not None:
+            count+=1
+            p=p.link
+        print("No.of nodes in list are:",count)
+
+    def searchNode(self,ele):
+        loc=1
+        p=self.root
+        while p is not None:
+            if(p.data==ele):
+                print(ele,"Is found in list at",loc)
+                return True
+            loc+=1
+            p=p.link
+        else:
+            print(ele,"Is not found in the list!")
+            return False
+
+    def insertAtBeg(self,data):
+        temp=Node(data)
+        temp.link=self.root
+        self.root=temp
+
+    def insertAtEnd (self,data):
+        temp=Node(data)
+        if self.root is None:
+            self.root=temp
+            return
+        p=self.root
+        while p.link is not None:
+            p= p.link
+        p.link=temp
+
+    def creatList(self):
+        n=int(input("Enter the No of elements you want: "))
+        if n==0:
+            return
+        for i in range(n):
+            data=int(input("Enter elemenets in the List: "))
+            self.insertAtEnd(data)
+
+    def insertAfterSpecified(self,data,loc):
+        p=self.root
+        while p is not None:
+            if p.data==loc:
+                break
+            p=p.link
+        if p is not None:
+            temp = Node(data)
+            temp.link = p.link
+            p.link = temp
+
+    def insertBeforeSpecified(self,data,loc):
+        if self.root is None:
+            print("List is empty.")
+            return
+        if loc==self.root.data:
+            temp=Node(data)
+            temp.link=self.root
+            self.root=temp
+            return
+        p=self.root
+        while p.link is not Node:
+            if p.link.data==loc:
+                break
+            p=p.link
+        if p.link is None:
+            print(loc,"Not present in this list.")
+        else:
+            temp=Node(data)
+            temp.link=p.link
+            p.link=temp
+
+    def insertAtPosition(self,data,loc):
+        if loc==1:
+            temp=Node(data)
+            temp.link=self.root
+            self.root=temp
+            return
+
+        p=self.root
+        i=1
+        while i<loc-1 and p is not None:
+            p=p.link
+            i+=1
+
+        if p is None:
+            print("You can only insert till",i)
+        else:
+            temp=Node(data)
+            temp.link=p.link
+            p.link=temp
+
+
+    def deleteFirst(self):
+        pass
+
+    def deleteLast(self):
+        pass
+
+    def deleteAny(self):
+        pass
+
+    def reverseList(self):
+        pass
+
+    def bsortByData(self):
+        pass
+
+    def bsortByLink(self):
+        pass
+
+    def hasCycle(self):
+        pass
+
+    def insertCycle(self):
+        pass
+
+    def detectCycle(self):
+        pass
+
+    def removeCycle(self):
+        pass
+
+    def merge2(self):
+        pass
+
+    def merge2(self):
+        pass
+
+    def mergeSort(self):
+        pass
+
+    def  mergesort2(self):
+        pass
+
+    def divideList(self):
+        pass
+
+list=singleLinkedList()
+list.creatList()
+
+while True:
+    print("1.Display List")
+    print("2.Count the no.of nodes")
+    print("3.Search a node")
+    print("4.Insert in empty list/insert at beginning")
+    print("5.Insert at end of list")
+    print("6.Insert after a specified node")
+    print("7.Insert before a specified node")
+    print("8. Insert at given position")
+    print("9.Delete first node")
+    print("10.Delete last node")
+    print("11.Delete any node")
+    print("12.Reverse the list")
+    print("13.Bubble sort by exchaning Data")
+    print("14.Bubble sort by exchaning links")
+    print("15.Merge sort")
+    print("16.Insert Cycle")
+    print("17.Detect Cycle")
+    print("18.Remove Cycle")
+    print("19.Quit")
+
+    choice=int(input("Enter a choice/operation you want to perform:"))
+    if choice==1:
+        list.displayList()
+    elif choice==2:
+        list.countNode()
+    elif choice==3:
+        ele=int(input("Enter the element to be searched: "))
+        list.searchNode(ele)
+    elif choice==4:
+        data=int(input("Enter the data to be inserted: "))
+        list.insertAtBeg(data)
+    elif choice==5:
+        data = int(input("Enter the data to be inserted: "))
+        list.insertAtEnd(data)
+    elif choice==6:
+        data = int(input("Enter the data to be inserted: "))
+        loc=int(input("Enter the Location at which data to be inserted: "))
+        list.insertAfterSpecified(data,loc)
+    elif choice==7:
+        data = int(input("Enter the data to be inserted: "))
+        loc = int(input("Enter the Location at which data to be inserted: "))
+        list.insertBeforeSpecified(data,loc)
+    elif choice==8:
+        data = int(input("Enter the data to be inserted: "))
+        loc = int(input("Enter the Location at which data to be inserted: "))
+        list.insertAtPosition(data,loc)
+    elif choice==9:
+        list.deleteFirst()
+    elif choice==10:
+        list.deleteLast()
+    elif choice==11:
+        data = int(input("Enter the data to be deleted: "))
+        list.deleteAny(data)
+    elif choice==12:
+        list.reverseList()
+    elif choice==13:
+        list.bsortByData()
+    elif choice==14:
+        list.bsortByLink()
+    elif choice==15:
+        list.mergeSort()
+    elif choice==16:
+        data = int(input("Enter the data at which the cycle has to be inserted: "))
+        list.insertCycle(data)
+    elif choice==17:
+        if(list.hasCycle()):
+            print("List has a cycle..")
+        else:
+            print("List doesnt have a cycle.")
+    elif choice==18:
+        list.removeCycle()
+    elif choice==19:
+        break
+    else:
+        print("Invalid choice!")
