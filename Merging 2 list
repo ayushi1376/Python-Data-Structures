@@ -1,0 +1,145 @@
+class Node:
+    def __init__(self,value): #initialising the node |data_|link_|
+        self.data=value
+        self.link=None
+
+class singleLinkedList:
+    def __init__(self): #initialising the root element
+        self.root=None
+
+    def displayList(self): #for displaying the list elements
+        if self.root is None:
+            print("List is empty")
+            return
+        else:
+            print("List is: ")
+            p=self.root
+            while p is not None:
+                print(p.data," ",end=" ")
+                p=p.link
+            print()
+
+    def insertAtBeg(self,data):
+        temp=Node(data)
+        temp.link=self.root
+        self.root=temp
+
+    def insertAtEnd (self,data):
+        temp=Node(data)
+        if self.root is None:
+            self.root=temp
+            return
+        p=self.root
+        while p.link is not None:
+            p= p.link
+        p.link=temp
+
+
+    def creatList(self):
+        n=int(input("Enter the No of elements you want: "))
+        if n==0:
+            return
+        for i in range(n):
+            data=int(input("Enter elemenets in the List: "))
+            self.insertAtEnd(data)
+
+    def bsortByData(self):
+        end=None
+        while end!=self.root.link:
+            p=self.root
+            while p.link!=end:
+                q=p.link
+                if p.data>q.data:
+                    p.data,q.data=q.data,p.data
+                p=p.link
+            end=p
+
+    def mergeSort(self, list2):
+        merge_list = singleLinkedList()
+        merge_list.root = self._merge2(self.root, list2.root)
+        return merge_list
+
+    def _merge2(self, p1, p2):
+        if p1.data <= p2.data:
+            startM = Node(p1.data)
+            p1 = p1.link
+        else:
+            startM = Node(p2.data)
+            p2 = p2.link
+        pM = startM
+        while p1 is not None and p2 is not None:
+            if p1.data <= p2.data:
+                pM.link = Node(p1.data)
+                p1 = p1.link
+            else:
+                pM.link = Node(p2.data)
+                p2 = p2.link
+            pM = pM.link
+        while p1 is not None:  # if list 2 is finished and only list 1 elements left
+            pM.link = Node(p1.data)
+            p1 = p1.link
+            pM = pM.link
+        while p2 is not None:
+            pM.link = Node(p2.data)
+            p2 = p2.link
+            pM = pM.link
+        return startM
+
+    def mergeLinks(self, list2):
+        merge_list = singleLinkedList()
+        merge_list.root = self._mergeLinks(self.root, list2.root)
+        return merge_list
+
+    def _mergeLinks(self, p1, p2):
+        if p1.data <= p2.data:
+            startM = p1
+            p1 = p1.link
+        else:
+            startM = p2
+            p2 = p2.link
+        pM = startM
+        while p1 is not None and p2 is not None:
+            if p1.data <= p2.data:
+                pM.link = p1
+                pM = pM.link
+                p1 = p1.link
+            else:
+                pM.link = p2
+                pM = pM.link
+                p2 = p2.link
+        if p1 is None:
+            pM.link = p2
+        else:
+            pM.link = p1
+        return startM
+
+list1=singleLinkedList()
+list2=singleLinkedList()
+
+list1.creatList()
+list2.creatList()
+
+list1.bsortByData()
+list2.bsortByData()
+
+print("First list:")
+list1.displayList()
+print("Second list:")
+list2.displayList()
+
+list3=list1.mergeSort(list2)
+print("Merged list:")
+list3.displayList()
+
+print("First list:")
+list1.displayList()
+print("Second list:")
+list2.displayList()
+
+list3=list1.mergeLinks(list2)
+print("Merged list:")
+list3.displayList()
+print("First list:")
+list1.displayList()
+print("Second list:")
+list2.displayList()
