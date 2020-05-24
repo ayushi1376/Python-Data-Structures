@@ -1,3 +1,4 @@
+#1.SingleLinked List.
 class Node:
     def __init__(self,value): #initialising the node |data_|link_|
         self.data=value
@@ -147,25 +148,25 @@ class singleLinkedList:
         else:
             p.link=p.link.link
 
-    def reverseList(self):
-        prev=None
+    def reverseList(self): #take 2 variables: prev p and next.
+        prev=None # prev is initialise to none because if behind p and p is start node.
         p=self.root
-        while p is not None:
-            next=p.link
-            p.link=prev
-            prev=p
-            p=next
+        while p is not None: #until p is none we'll check
+            next=p.link # intialise next as p's successor 
+            p.link=prev #p's link as prev
+            prev=p #mode prev at p's location
+            p=next # move p to next and next to p.link value, I.E prev=1 p=2 and next=3
         self.root=prev
 
     def bsortByData(self):
-        end=None
-        while end!=self.root.link:
+        end=None #initialise end as None
+        while end!=self.root.link: 
             p=self.root
-            while p.link!=end:
+            while p.link!=end: #until p doesnt reaches or point end we'll check
                 q=p.link
-                if p.data>q.data:
-                    p.data,q.data=q.data,p.data
-                p=p.link
+                if p.data>q.data: #if value of p's data is greater than value of q's data
+                    p.data,q.data=q.data,p.data #swap values
+                p=p.link #increment the node
             end=p
 
     def bsortByLink(self):
@@ -186,19 +187,55 @@ class singleLinkedList:
                 p=p.link
             end=p
 
-    def hasCycle(self):
-        pass
+    def hasCycle(self): #help detecting if there is any loop or self contained cycles in the list.
+        if self.detectCycle() is None:
+            return False
+        else:
+            return True
 
     def insertCycle(self):
         pass
 
     def detectCycle(self):
-        pass
+        if self.root is None or self.root.link is None: # if list of empty or just one node, we'll return NONR
+            return None
+        slow=self.root #initialise both fast and slow as root
+        fast=self.root #slow will move one node at a time, fast move 2 nodes at a time
+        while fast is not None and fast.link is not None:
+            slow=slow.link
+            fast=fast.link.link
+            if slow==fast: # if fast and slow meets it will detect the cycle in the list.
+                return slow #return the position of meeting of fast and slow.
+        return None
 
     def removeCycle(self):
-        pass
+        c=self.detectCycle() #c is the point where fast adn slow met.
+        if c is None:
+            print("Node at which the cycle is detected :",c.data)
+        p=c #initialising p and q at the position where fast and slow met.
+        q=c
+        len_cycle=0 #length of the cycle
+        while True:
+            len_cycle+=1
+            q=q.link   #just moving q and fixing p at c, whenever q==p we'll stop and take the count of nodes as length of cycle.
+            if p==q:
+                break
+        print("length of the cycle is:",len_cycle)
+        lrl=0
+        p=self.root #to detect remaining nodes initialise p at start and move both p and q
+        while p!=q:
+            lrl+=1
+            p=p.link #the node at which both p and q again meet, is the break point and provide the remaining len of list.
+            q=q.link
+        print("Node not in the list are:",lrl)
+        llist=len_cycle+lrl # adding length of lista d  remaining nodes will give the total length of the list.
+        print("Length of list is:",llist)
+        p=self.root
+        for i in range(llist-1): #looping till total length-1 to remove the cycle by making last node's link as NONE 
+            p=p.link
+        p.link=None
 
-    def mergeSort(self,list2):
+    def mergelist(self,list2):
         merge_list=singleLinkedList()
         merge_list.root=self._merge2(self.root,list2.root)
         return merge_list
@@ -223,7 +260,7 @@ class singleLinkedList:
             pM.link=Node(p1.data)
             p1=p1.link
             pM=pM.link
-        while p2 is not None:
+        while p2 is not None: #if list 2 is left and list 1 finishes
             pM.link=Node(p2.data)
             p2=p2.link
             pM=pM.link
@@ -257,8 +294,28 @@ class singleLinkedList:
             pM.link=p1
         return startM
 
-    def divideList(self):
-        pass
+    def mergesort(self):
+        self.root=self.merrec(self.root)
+
+    def merrec(self,list_start):
+        if list_start is None or list_start.link is None: #if empty list or only one node found, return NONE
+            return list_start
+        s1=list_start #initialise first list 
+        s2=self.divideList(list_start) #initialise second list
+        s1=self.merrec(s1) #recursively sorting list
+        s2=self.merrec(s2)
+        startM=self._merge2(s1,s2) #calling defined func to sort 2 list and club into one list
+        return startM
+
+    def divideList(self,p):
+        q=p.link.link
+        while q is not  None and q.link is not None:
+            p=p.link
+            q=q.link.link
+        s2=p.link
+        p.link=None
+        return s2
+
 
 list=singleLinkedList()
 list.creatList()
@@ -278,11 +335,12 @@ while True:
     print("12.Reverse the list")
     print("13.Bubble sort by exchaning Data")
     print("14.Bubble sort by exchaning links")
-    print("15.Merge sort")
+    print("15.Merge List")
     print("16.Insert Cycle")
     print("17.Detect Cycle")
     print("18.Remove Cycle")
-    print("19.Quit")
+    print("19.Merge sort")
+    print("20.Quit")
 
     choice=int(input("Enter a choice/operation you want to perform:"))
     if choice==1:
@@ -324,7 +382,7 @@ while True:
     elif choice==14:
         list.bsortByLink()
     elif choice==15:
-        list.mergeSort()
+        list.mergelist()
     elif choice==16:
         data = int(input("Enter the data at which the cycle has to be inserted: "))
         list.insertCycle(data)
@@ -336,6 +394,8 @@ while True:
     elif choice==18:
         list.removeCycle()
     elif choice==19:
+        list.mergesort()
+    elif choice==20:
         break
     else:
         print("Invalid choice!")
