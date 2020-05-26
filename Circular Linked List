@@ -1,0 +1,149 @@
+#Circular Linked List
+class Node:
+    def __init__(self,value):
+        self.data=value
+        self.link=None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last=None
+
+    def displaylist(self):
+        if self.last is None:
+            print("List is empty!!")
+            return
+        p=self.last.link
+        while True:
+            print(p.data,end=" ")
+            p=p.link
+            if p==self.last.link:
+                break
+        print()
+
+    def insertatbeg(self,data):
+        temp=Node(data)
+        temp.link=self.last.link
+        self.last.link=temp
+
+    def insertatend(self,data):
+        temp=Node(data)
+        temp.link=self.last.link
+        self.last.link=temp
+        self.last=temp
+
+    def insertatempty(self,data):
+        temp=Node(data)
+        self.last=temp
+        self.last.link=self.last
+
+    def insertafter(self,data,loc):
+        p=self.last.link
+        while True:
+            if p.data==loc: #finding reference to the value p's next
+                break
+            p=p.link
+            if p==self.last.link:
+                break
+        if p==self.last.link and p.data!=loc:
+            print(loc,"is not found")
+        else:
+            temp=Node(data)
+            temp.link=p.link
+            p.link=temp
+            if p==self.last:
+                self.last=temp
+
+    def createlist(self):
+        n=int(input("Enter the no.of elements in list: "))
+        if n==0:
+            return
+        data=int(input("Enter the elements of list: "))
+        self.insertatempty(data)
+        for i in range(n-1):
+            data = int(input("Enter the elements of list: "))
+            self.insertatend(data)
+
+    def deletefirst(self):
+        if self.last is None: #if list is empty
+            return
+        if self.last.link==self.last: #deleting when only one node is present
+            self.last=None
+            return
+        self.last.link=self.last.link.link #if list have many nodes
+
+    def deletelast(self):
+        if self.last is None: #if list is empty
+            return
+        if self.last.link==self.last: #deleting when only one node is present
+            self.last=None
+            return
+        p=self.last.link
+        while p.link!=self.last: #finding last and deleting it
+            p=p.link
+        p.link=self.last.link
+        self.last=p
+
+    def deletenode(self,loc):
+        if self.last is None: #if list is empty
+            return
+        if self.last.link==self.last and self.last.data==loc:
+            self.last=None
+            return
+        if self.last.link.data==loc:
+            self.last.link=self.last.link.link
+            return
+        p=self.last.link
+        while p.link!=self.last.link:
+            if p.link.data==loc:
+                break
+            p=p.link
+        if p.link==self.last.link:
+            print(loc,"Not found!!")
+        else:
+            p.link=p.link.link
+            if self.last.data==loc:
+                self.last=p
+
+
+list=CircularLinkedList()
+list.createlist()
+
+while True:
+    print("1.Display List")
+    print("2.Insert in empty list")
+    print("3.Insert at end of list")
+    print("4.Insert at beginning of the list")
+    print("5.Insert after a specified node")
+    print("6.Delete first node")
+    print("7.Delete last node")
+    print("8.Delete any node")
+    print("9.Quit")
+
+    choice=int(input("Enter a choice: "))
+    if(choice==1):
+        list.displaylist()
+    elif(choice==2):
+        data=int(input("Enter the element to be inserted: "))
+        list.insertatempty(data)
+    elif(choice==3):
+        data = int(input("Enter the element to be inserted: "))
+        list.insertatend(data)
+    elif(choice==4):
+        data = int(input("Enter the element to be inserted: "))
+        list.insertatbeg(data)
+    elif(choice==5):
+        data = int(input("Enter the element to be inserted: "))
+        loc=int(input("Enter the location at which your want to insert: "))
+        list.insertafter(data,loc)
+    elif(choice==6):
+        list.deletefirst()
+    elif(choice==7):
+        list.deletelast()
+    elif(choice==8):
+        data=int(input("Element that you want to delete: "))
+        list.deletenode(data)
+    elif(choice==9):
+        break
+    else:
+        print("Wrong choice!!")
+    print()
