@@ -6,4 +6,4 @@
 #### 3.Stack and Queue
 #### 4.Hashing
 #### 5.Searching
-#### 5.Binary Search Trees (BST)
+#### 6.Binary Search Trees (BST)
