@@ -1,0 +1,204 @@
+#double Linked List.
+
+class Node:
+    def __init__(self,val):  # initialising the node |data_|link_|
+        self.data=val
+        self.prev=None
+        self.next=None
+
+class DoubleLinkedList:
+    def __init__(self):
+        self.root=None #describing empty list
+
+    def displaylist(self):
+        if self.root==None:
+            print("The list is empty!")
+            return
+        p=self.root
+        print("List is: ")
+        while p is not None:
+            print(p.data,end=" ")
+            p=p.next
+        print()
+
+    def insertatempty(self,data):
+        temp=Node(data)
+        self.root=temp #its means we have inserted first node in the list.
+
+    def insertatbeg(self,data):
+        temp=Node(data)
+        temp.next=self.root #right connection with list
+        self.root.prev=temp #left connection with root node
+        self.root=temp #connecting root to new list
+
+    def insertatend(self,data):
+        temp=Node(data)
+        p=self.root
+        while p.next is not None:
+            p=p.next
+        p.next=temp #connecting to none part of node
+        temp.prev=p #connecting to list
+
+    def creatlist(self):
+        n=int(input("Enter the no.of elements you want in list: "))
+        if n==0:
+            return
+        data=int(input("Enter the first element: "))
+        self.insertatempty(data)
+        for i in range(n-1):
+            data=int(input("Enter next elements: "))
+            self.insertatend(data)
+
+    def insertatafter(self,data,loc):
+        temp=Node(data)
+        p=self.root
+        while p is not None:
+            if p.data==loc:
+                break
+            p=p.next #reference to p's next node ie if 2nd then after 2nd we'll insert node
+        if p is None:
+            print(loc,"is not present in the list!!")
+        else:
+            temp.prev=p #connecting to p
+            temp.next=p.next #connecting nect to p
+            if p.next is not None:
+                p.next.prev=temp
+            p.next=temp
+
+    def insertatbefore(self,data,loc):
+        if self.root is None:
+            print("List is empty")
+            return
+        if self.root.data==loc: #when loc is 1st node when we'll insert it here
+            temp=Node(data)
+            temp.next=self.root
+            self.root.prev=temp
+            self.root=temp
+            return
+        p=self.root #if not first position then
+        while p is not None:
+            if p.data==loc:
+                break
+            p=p.next #reference of node you want to insert
+        if p is None:
+            print(loc,"is not present is list")
+        else:
+            temp=Node(data)
+            temp.prev=p.prev #connection of temp with p's prev node
+            temp.next=p #connection with p by temp's next
+            p.prev.next=temp #p's prev's next connect to temp
+            p.prev=temp #p's prev is connected to temp
+
+    def deletefirst(self):
+        if self.root is None: #if list is empty
+            return
+        if self.root.next is None: #if list just have one node
+            self.root=None
+            return
+        self.root=self.root.next #when list is having more then 1 node, link root to 2nd node
+        self.root.prev=None #make 2nd nodes prev none
+
+    def deletelast(self):
+        if self.root is None: #if list is empty
+            return
+        if self.root.next is None: #if list have one node
+            self.root=None
+            return
+        p=self.root
+        while p.next!=None: #reference to last node
+            p=p.next
+        p.prev.next=None #make last-1 node's next as none
+
+    def deletenode(self,data):
+        if self.root is None: 
+            return
+        if self.root.next is None:
+            if self.root.data==data:
+                self.root=None
+            else:
+                print(data,"Not found in list!!")
+            return
+        if self.root.data==data:
+            self.root=self.root.next
+            self.root.prev=None
+            return
+        p=self.root.next
+        while p.next is not None:
+            if p.data==data:
+                break
+            p=p.next
+        if p.next is not None:
+            p.prev.next=p.next
+            p.next.prev=p.prev
+        else:
+            if p.data==data:
+                p.prev.next=None
+            else:
+                print(data,"Not found.")
+
+    def reverse_list(self):
+        if self.root is None:
+            return
+        p1=self.root
+        p2=p1.next
+        p1.next=None
+        p1.prev=p2
+        while p2 is not None:
+            p2.prev=p2.next
+            p2.next=p1
+            p1=p2
+            p2=p2.next
+        self.root=p1
+
+
+
+list=DoubleLinkedList()
+list.creatlist()
+
+while True:
+    print("1.Display List")
+    print("2.Insert in empty list")
+    print("3.Insert at end of list")
+    print("4.Insert at beginning of the list")
+    print("5.Insert after a specified node")
+    print("6.Insert before a specified node")
+    print("7.Delete first node")
+    print("8.Delete last node")
+    print("9.Delete any node")
+    print("10.Reverse the list")
+    print("11.Quit")
+
+    choice=int(input("Enter a choice: "))
+    if(choice==1):
+        list.displaylist()
+    elif(choice==2):
+        data=int(input("Enter the element to be inserted: "))
+        list.insertatempty(data)
+    elif(choice==3):
+        data = int(input("Enter the element to be inserted: "))
+        list.insertatend(data)
+    elif(choice==4):
+        data = int(input("Enter the element to be inserted: "))
+        list.insertatbeg(data)
+    elif(choice==5):
+        data = int(input("Enter the element to be inserted: "))
+        loc=int(input("Enter the location at which your want to insert: "))
+        list.insertatafter(data,loc)
+    elif(choice==6):
+        data = int(input("Enter the element to be inserted: "))
+        loc = int(input("Enter the location at which your want to insert: "))
+        list.insertatbefore(data, loc)
+    elif(choice==7):
+        list.deletefirst()
+    elif(choice==8):
+        list.deletelast()
+    elif(choice==9):
+        data=int(input("Element that you want to delete: "))
+        list.deletenode(data)
+    elif(choice==10):
+        list.reverse_list()
+    elif(choice==11):
+        break
+    else:
+        print("Wrong choice!!")
+    print()
