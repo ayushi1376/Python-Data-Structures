@@ -1,0 +1,150 @@
+# CONCATENATION OF LINKED LIST
+
+# A.SINGLE LINKED LIST
+
+class Node:
+    def __init__(self,value): #initialising the node |data_|link_|
+        self.data=value
+        self.link=None
+
+class singleLinkedList:
+    def __init__(self): #initialising the root element
+        self.root=None
+
+    def displayList(self): #for displaying the list elements
+        if self.root is None:
+            print("List is empty")
+            return
+        else:
+            print("List is: ")
+            p=self.root
+            while p is not None:
+                print(p.data," ",end=" ")
+                p=p.link
+            print()
+
+    def insertAtBeg(self, data):
+        temp=Node(data)
+        temp.link=self.root
+        self.root=temp
+
+    def insertAtEnd (self,data):
+        temp=Node(data)
+        if self.root is None:
+            self.root=temp
+            return
+        p=self.root
+        while p.link is not None:
+            p= p.link
+        p.link=temp
+
+    def creatList(self):
+        n=int(input("Enter the No of elements you want: "))
+        if n==0:
+            return
+        for i in range(n):
+            data=int(input("Enter elemenets in the List: "))
+            self.insertAtEnd(data)
+
+    def concatelist(self,list2):
+        if self.root is None: #if list 1 is empty
+            self.root=list2.root #add root of 1st list to another list
+            return
+        if list2.root is None: #if 2nd list is empty return
+            return
+        p=self.root #when there are 2 list
+        while p.link is not None:
+            p=p.link #finding reference to last node of 1st list
+        p.link=list2.root #connecting last not of 1st list to 1st node of 2nd list.(Connecting at end of 1st list)
+
+list1=singleLinkedList()
+list2=singleLinkedList()
+
+print("Enter 1st list: ")
+list1.creatList()
+print("Enter 2nd list: ")
+list2.creatList()
+
+print("1st list: ")
+list1.displayList()
+print("2nd list: ")
+list2.displayList()
+
+list1.concatelist(list2)
+print("Concatinated list: ")
+list1.displayList()
+
+
+# CONCATENATION OF LINKED LIST
+# B.CIRCULAR LINKED LIST
+
+class Node:
+    def __init__(self,value):
+        self.data=value
+        self.link=None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last=None
+
+    def displaylist(self):
+        if self.last is None:
+            print("List is empty!!")
+            return
+        p=self.last.link
+        while True:
+            print(p.data,end=" ")
+            p=p.link
+            if p==self.last.link:
+                break
+        print()
+
+    def insertatend(self,data):
+        temp=Node(data)
+        temp.link=self.last.link
+        self.last.link=temp
+        self.last=temp
+
+    def insertatempty(self,data):
+        temp=Node(data)
+        self.last=temp
+        self.last.link=self.last
+
+    def createlist(self):
+        n=int(input("Enter the no.of elements in list: "))
+        if n==0:
+            return
+        data=int(input("Enter the elements of list: "))
+        self.insertatempty(data)
+        for i in range(n-1):
+            data = int(input("Enter the elements of list: "))
+            self.insertatend(data)
+
+    def concatelist(self,list2):
+        if self.last is None:
+            self.last=list2.last
+            return
+        if list2.last is None:
+            return
+        p=self.last.link
+        self.last.link=list2.last.link
+        list2.last.link=p
+        self.last=list2.last
+
+
+list1=CircularLinkedList()
+list2=CircularLinkedList()
+
+print("Enter 1st list: ")
+list1.createlist()
+print("Enter 2nd list: ")
+list2.createlist()
+
+print("1st list: ")
+list1.displaylist()
+print("2nd list: ")
+list2.displaylist()
+
+list1.concatelist(list2)
+print("Concatinated list: ")
+list1.displaylist()
