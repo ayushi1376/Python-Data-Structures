@@ -1,0 +1,81 @@
+#SORTED LINKED LIST:
+
+class Node:
+    def __init__(self,val):
+        self.data=val
+        self.link=None
+class Sortedlinkedlist:
+    def __init__(self):
+        self.root=None
+
+    def insertion(self,data):
+        temp=Node(data)
+        if self.root==None or data<self.root.data:
+            temp.link=self.root
+            self.root=temp
+            return
+        p=self.root
+        while p.link is not None and p.link.data<=data:
+            p=p.link
+        temp.link=p.link
+        p.link=temp
+
+    def createlist(self):
+        n=int(input("Enter the no.of elements you want in list: "))
+        if n==0:
+            return
+        for i in range(n):
+            data=int(input("Enter the element: "))
+            list.insertion(data)
+
+    def searchNode(self, ele):
+        if self.root is None:
+            print("List is empty!!!")
+            return
+        loc=1
+        p=self.root
+        while p is not None and p.data<=ele:
+            if(p.data==ele):
+                print(ele,"Is found in list at",loc)
+                break
+            loc+=1
+            p=p.link
+        else:
+            print(ele,"Is not found in the list!")
+            return
+
+    def displayList(self):  # for displaying the list elements
+        if self.root is None:
+            print("List is empty")
+            return
+        else:
+            print("List is: ")
+            p=self.root
+            while p is not None:
+                print(p.data," ",end=" ")
+                p=p.link
+            print()
+
+list=Sortedlinkedlist()
+list.createlist()
+
+while True:
+    print("1.Display list.")
+    print("2.Insert")
+    print("3.Search")
+    print("4.Quit")
+
+    option=int(input("Enter a choice: "))
+    if(option==1):
+        list.displayList()
+    elif(option==2):
+        data=int(input("Enter element: "))
+        list.insertion(data)
+    elif(option==3):
+        data = int(input("Enter element you want to search: "))
+        list.searchNode(data)
+    elif(option==4):
+        break
+    else:
+        print("invalid option!!!")
+    print()
