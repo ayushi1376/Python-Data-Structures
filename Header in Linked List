@@ -1,0 +1,120 @@
+# Header in a linked list:
+
+class Node:
+    def __init__(self,value):
+        self.data=value
+        self.link = None
+
+class HeaderLinkedList:
+    def __init__(self):
+        self.head=Node(0) #initialise head part that will initialise the list
+
+    def displaylist(self):
+        if self.head.link is None:
+            print("List is empty!!")
+            return
+        p=self.head.link
+        print("list is: ")
+        while p is not None:
+            print(p.data,end=" ")
+            p=p.link
+        print()
+
+    def createlist(self):
+        n=int(input("Enter the no.of elements is the list: "))
+        for i in range(n):
+            data=int(input("Enter the no.of elements: "))
+            self.insertatend(data)
+
+    def insertatend(self,data):
+        temp= Node(data)
+        p=self.head
+        while p.link is not None:
+            p=p.link
+        p.link=temp
+
+    def insertbefore(self,data,loc):
+        p=self.head
+        while p.link is not None: #reference to the predecessor node ie if 3 then reference of 2
+            if p.link.data==loc:
+                break
+            p=p.link
+        if p.link is None: #if the node is not present
+            print(loc,"is not present in the list!!")
+        else:
+            temp=Node(data) #when the node is present insert element at that location
+            temp.link=p.link
+            p.link=temp
+
+    def insertatposition(self,data,loc):
+        p = self.head
+        i=1
+        while i<=loc-1 and p is not None:
+            p=p.link
+            i+=1
+        if p is None:
+            print("You can only insert till",(i-1))
+        else:
+            temp=Node(data)
+            temp.link=p.link
+            p.link=temp
+
+    def deletenode(self,data):
+        p=self.head
+        while p.link is not None:
+            if p.link.data==data:
+                break
+            p=p.link
+        if p.link==None:
+            print(data,"is not present in the list!!")
+        else:
+            p.link=p.link.link
+
+    def reverselist(self):
+        prev=None
+        p=self.head.link
+        while p is not None:
+            next=p.link
+            p.link=prev
+            prev=p
+            p=next
+        self.head.link=prev
+
+
+list1=HeaderLinkedList()
+list1.createlist()
+
+while True:
+    print("1.Display elements of the list.")
+    print("2.Insert node at end.")
+    print("3.Insert before specified node.")
+    print("4.Insert at specified node.")
+    print("5.Delete Node.")
+    print("6.Reverse list.")
+    print("7.Quit")
+
+    choice=int(input("Enter the choice: "))
+    if(choice==1):
+        list1.displaylist()
+    elif(choice==2):
+        data=int(input("Enter the elements of list: "))
+        list1.insertatend(data)
+    elif(choice==3):
+        loc=int(input("Enter the location your want to add element: "))
+        data=int(input("Enter the elements: "))
+        list1.insertbefore(data,loc)
+    elif(choice==4):
+        loc = int(input("Enter the location your want to add element: "))
+        data = int(input("Enter the elements: "))
+        list1.insertatposition(data,loc)
+    elif(choice==5):
+        data=int(input("Enter the element you want to delete!! "))
+        list1.deletenode(data)
+    elif(choice==6):
+        list1.reverselist()
+    elif(choice==7):
+        break
+    else:
+        print("Wrong/Invalid choice..")
+    print()
+
