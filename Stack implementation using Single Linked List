@@ -1,0 +1,77 @@
+# A-2:Linked List implementation of Stack(Linked implementation)
+
+class StackEmptyError(Exception):
+    pass
+
+class Node:
+    def __init__(self,value):
+        self.data=value
+        self.link=None
+
+class Stack:
+    def __init__(self):
+        self.top=None
+    def is_empty(self):
+        return self.top==None
+    def size(self):
+        if self.is_empty():
+            return 0
+        count=0
+        p=self.top
+        while p is not None:
+            count+=1
+            p=p.link
+        return count
+    def push(self,data):
+        temp=Node(data)
+        temp.link=self.top
+        self.top=temp
+    def pop(self):
+        if self.is_empty():
+            raise StackEmptyError("List is Empty, can't pop!!")
+        popped_ele=self.top.data
+        self.top=self.top.link
+        return popped_ele
+    def peek(self):
+        if self.is_empty():
+            raise StackEmptyError("List is empty!!")
+        return self.top.data
+    def display(self):
+        if self.is_empty():
+            print("Empty list")
+            return
+        print("List is: ")
+        p=self.top
+        while p is not None:
+            print(p.data,end=" ")
+            p=p.link
+
+if __name__=="__main__":
+    stack=Stack()
+
+    while True:
+        print("1.Push.")
+        print("2.Pop.")
+        print("3.Peek.")
+        print("4.Size.")
+        print("5.Display.")
+        print("6.Quit")
+
+        choice=int(input("Enter a choice: "))
+        if(choice==1):
+            ele=int(input("Enter the elements: "))
+            stack.push(ele)
+        elif(choice==2):
+            popped=stack.pop()
+            print("Popped element is : ",popped)
+        elif(choice==3):
+            print("Element at the top is : ",stack.peek())
+        elif(choice==4):
+            print("Size of the stack is: ",stack.size())
+        elif(choice==5):
+            stack.display()
+        elif(choice==6):
+            break
+        else:
+            print("Invalid choice!!")
+        print()
