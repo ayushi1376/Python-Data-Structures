@@ -1,0 +1,124 @@
+# A.STACKS:
+# A-1:STACK IMPLEMENTATION USING ARRAYS(PTYHON'S LIST):
+# #A-1-a:Dynamic implementation(stack can grow to any length)
+
+class EmptyClassException(Exception):
+    pass
+class Stack:
+    def __init__(self):
+        self.item=[]
+    def is_empty(self):
+        return self.item==[]
+    def stack_len(self):
+        return len(self.item)
+    def pop(self):
+        if self.is_empty():
+            raise EmptyClassException("Stack is Empty!!")
+        return self.item.pop()
+    def push(self,ele):
+        self.item.append(ele)
+    def peek(self):
+        if self.is_empty():
+            raise EmptyClassException("List is Empty!!")
+        return self.item[-1]
+    def display(self):
+        print(self.item)
+
+if __name__=="__main__":
+    stack=Stack()
+
+    while True:
+        print("1.Push.")
+        print("2.Pop.")
+        print("3.Peek.")
+        print("4.Size.")
+        print("5.Display.")
+        print("6.Quit")
+
+        choice=int(input("Enter a choice: "))
+        if(choice==1):
+            ele=int(input("Enter the elements: "))
+            stack.push(ele)
+        elif(choice==2):
+            popped=stack.pop()
+            print("Popped element is : ",popped)
+        elif(choice==3):
+            print("Element at the top is : ",stack.peek())
+        elif(choice==4):
+            print("Size of the stack is: ",stack.stack_len())
+        elif(choice==5):
+            stack.display()
+        elif(choice==6):
+            break
+        else:
+            print("Invalid choice!!")
+        print()
+
+
+
+# A-1-b:Static implementation(stack is fixed lengthed)
+
+class StackEmptyError(Exception):
+    pass
+class StackFullError(Exception):
+    pass
+
+class Stack:
+    def __init__(self,max_len=10):
+        self.item=[None]*max_len
+        self.count=0
+
+    def size(self):
+        return self.count
+    def is_empty(self):
+        return self.item==0
+    def is_full(self):
+        return self.item==len(self.item)
+    def push(self,ele):
+        if self.is_full():
+            raise StackFullError("List is Full!!")
+        self.item[self.count]=ele
+        self.count+=1
+    def pop(self):
+        if self.is_empty():
+            raise StackEmptyError("List is Empty!!")
+        ele=self.item[self.count-1]
+        self.item[self.count-1]=None
+        self.count-=1
+        return ele
+    def peek(self):
+        if self.is_empty():
+            raise StackEmptyError("List is Empty!!")
+        return self.item[self.count-1]
+    def display(self):
+        print(self.item)
+
+if __name__=="__main__":
+    stack=Stack()
+
+    while True:
+        print("1.Push.")
+        print("2.Pop.")
+        print("3.Peek.")
+        print("4.Size.")
+        print("5.Display.")
+        print("6.Quit")
+
+        choice=int(input("Enter a choice: "))
+        if(choice==1):
+            ele=int(input("Enter the elements: "))
+            stack.push(ele)
+        elif(choice==2):
+            popped=stack.pop()
+            print("Popped element is : ",popped)
+        elif(choice==3):
+            print("Element at the top is : ",stack.peek())
+        elif(choice==4):
+            print("Size of the stack is: ",stack.size())
+        elif(choice==5):
+            stack.display()
+        elif(choice==6):
+            break
+        else:
+            print("Invalid choice!!")
+        print()
