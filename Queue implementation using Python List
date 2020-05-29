@@ -57,7 +57,7 @@ if __name__=="__main__":
         print()
 
 
-#B-1-b:Effecient implementation for queue:
+#B-1-b:Efficient implementation for queue:
 
 class QueueEmptyError(Exception):
     pass
