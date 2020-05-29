@@ -1,5 +1,6 @@
 # B:QUEUES:
 #B-1:Array implementation of QUEUES
+#B-1-a:Dyanmic length
 
 class QueueEmptyError(Exception):
     pass
