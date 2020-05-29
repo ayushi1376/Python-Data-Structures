@@ -1,0 +1,74 @@
+#Circular Queue:
+
+class QueueException(Exception):
+    print()
+class CircularQueue:
+    def __init__(self,size=5):
+        self.item=[None]*size
+        self.front=0
+        self.count=0
+    def is_empty(self):
+        return self.count==0
+    def size(self):
+        return self.count
+    def enqueue(self,data):
+        if self.count==len(self.item):
+            self.resize(2*len(self.item))
+        i=(self.front+self.count)%len(self.item)
+        self.item[i]=data
+        self.count+=1
+    def dequeque(self):
+        if self.is_empty():
+            raise QueueException("Queue is empty.")
+        x=self.item[self.front]
+        self.item[self.front]=None
+        self.front=(self.front+1)%len(self.item)
+        self.count-=1
+    def peek(self):
+        if self.is_empty():
+            raise QueueException("Queue is empty.")
+        return self.item[self.front]
+    def display(self):
+        print(self.item)
+    def resize(self,n):
+        old=self.item
+        self.item=[None]*n
+        i=self.front
+        for j in range(self.count):
+            self.item[j]=old[i]
+            i=(1+i)%len(old)
+        self.front=0
+
+if __name__=="__main__":
+    queue=CircularQueue()
+
+    while True:
+        print("1.Enqueue")
+        print("2.Dequeue")
+        print("3.Size")
+        print("4.Peek")
+        print("5.Display")
+        print("6.Quit")
+
+        choice=int(input("Enter a choice: "))
+        if(choice==1):
+            data=int(input("Enter the element: "))
+            queue.enqueue(data)
+        elif(choice==2):
+            popped=queue.dequeque()
+            print("Delete elements is: ",popped)
+        elif(choice==3):
+            s=queue.size()
+            print("Size is: ",s)
+        elif(choice==4):
+            p=queue.peek()
+            print("Front is at: ",p)
+        elif(choice==5):
+            queue.display()
+        elif(choice==6):
+            break
+        else:
+            print("Invalid Choice!!")
+        print()
+
+
