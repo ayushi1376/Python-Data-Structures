@@ -1,0 +1,83 @@
+
+#Linked List implementation of Queue:
+
+class QueueEmptyError(Exception):
+    pass
+class Node:
+    def __init__(self,val):
+        self.data=val
+        self.link=None
+
+class Queue:
+    def __init__(self):
+        self.front=None
+        self.rear=None
+        self.size=0
+
+    def is_empty(self):
+        return self.front==None
+
+    def sizeofQueue(self):
+        return self.size
+
+    def enqueue(self,data):
+        temp=Node(data)
+        if self.front==None:
+            self.front=temp
+        else:
+            self.rear.link=temp
+        self.rear=temp
+        self.size+=1
+    def dequeue(self):
+        if self.is_empty():
+            raise QueueEmptyError("Queue is empty.")
+        x=self.front.data
+        self.front=self.front.link
+        self.size-=1
+        return x
+    def peek(self):
+        if self.is_empty():
+            raise QueueEmptyError("Queue is empty")
+        return self.front.data
+    def display(self):
+        if self.is_empty():
+            print("Queue is empty")
+            return
+        print("Queue is: ")
+        p=self.front
+        while p is not None:
+            print(p.data,end=" ")
+            p=p.link
+        print()
+
+if __name__=="__main__":
+    queue=Queue()
+
+    while True:
+        print("1.Enqueue")
+        print("2.Dequeue")
+        print("3.Size")
+        print("4.Peek")
+        print("5.Display")
+        print("6.Quit")
+
+        choice=int(input("Enter a choice: "))
+        if(choice==1):
+            data=int(input("Enter the element: "))
+            queue.enqueue(data)
+        elif(choice==2):
+            popped=queue.dequeue()
+            print("Delete elements is: ",popped)
+        elif(choice==3):
+            s=queue.sizeofQueue()
+            print("Size is: ",s)
+        elif(choice==4):
+            p=queue.peek()
+            print("Front is at: ",p)
+        elif(choice==5):
+            queue.display()
+        elif(choice==6):
+            break
+        else:
+            print("Invalid Choice!!")
+        print()
