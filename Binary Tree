@@ -1,0 +1,116 @@
+#Binary Tree
+from collections import deque
+class Node:
+    def __init__(self,val):
+        self.data=val
+        self.rchild=None
+        self.lchild=None
+class BinaryTree:
+    def __init__(self):
+        self.root=None
+
+    def isempty(self):
+        return self.root==None
+
+    def display(self):
+        self.display1(self.root,0)
+        print()
+    def display1(self,p,level):
+        if p is None:
+            return
+        self.display1(p.rchild,level+1)
+        print()
+        for i in range(level):
+            print(" ",end='')
+        print(p.data)
+        self.display1(p.lchild,level+1)
+
+    def pre(self):
+        self.preorder(self.root)
+        print()
+    def preorder(self,p):
+        if p is None:
+            return
+        print(p.data," ",end='')
+        self.preorder(p.lchild)
+        self.preorder(p.rchild)
+
+    def inn(self):
+        self.inorder(self.root)
+        print()
+    def inorder(self,p):
+        if p is None:
+            return
+        self.inorder(p.lchild)
+        print(p.data," ",end='')
+        self.inorder(p.rchild)
+
+    def post(self):
+        self.postorder(self.root)
+        print()
+    def postorder(self,p):
+        if p is None:
+            return
+        self.postorder(p.lchild)
+        self.postorder(p.rchild)
+        print(p.data," ",end='')
+
+    def level(self):
+        if self.root is None:
+            print("Tree is empty!!")
+        qu=deque()
+        qu.append(self.root)
+        while len(qu)!=0:
+            p=qu.pop()
+            print(p.data," ",end='')
+            if p.lchild is not None:
+                qu.append(p.lchild)
+            if p.rchild is not None:
+                qu.append(p.rchild)
+
+    def height(self):
+        return self.height1(self.root)
+
+    def height1(self,p):
+        if p is None:
+            return 0
+        hl=self.height1(p.lchild)
+        hr=self.height1(p.rchild)
+
+        if hl > hr:
+            return(1+hl)
+        else:
+            return(1+hr)
+
+    def create(self):
+        self.root=Node('A')
+        self.root.lchild=Node('B')
+        self.root.rchild=Node('C')
+        self.root.lchild.lchild=Node('D')
+        self.root.lchild.rchild=Node('E')
+        self.root.rchild.rchild=Node('F')
+
+BT=BinaryTree()
+BT.create()
+
+BT.display()
+
+print("PREORDER: ")
+BT.pre()
+print()
+
+print("INORDER: ")
+BT.inn()
+print()
+
+print("POSTORDER: ")
+BT.post()
+print()
+
+print("LEVELS: ")
+BT.level()
+print()
+
+print("HEIGHT: ")
+BT.height()
+print()
