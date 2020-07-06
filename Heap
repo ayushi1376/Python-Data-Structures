@@ -1,0 +1,85 @@
+class heapexception(Exception):
+    pass
+
+class Heap:
+    def __init__(self,maxsize=10):
+        self.a=[None]*maxsize
+        self.n=0
+        self.a[0]=9999
+
+    def insertnode(self,value):
+        self.n+=1
+        self.a[self.n]=value
+        self.restoreUpKey(self.n)
+
+    def restoreUpKey(self,i):
+        key=self.a[i]
+        iparent=i//2
+        while self.a[iparent]<key:
+            self.a[i]=self.a[iparent]
+            i=iparent
+            iparent=i//2
+        self.a[i]=key
+
+    def deletenode(self):
+        if self.n==0:
+            raise heapexception("Heap is empty, Nothing to be deleted!")
+        maxVal=self.a[1]
+        self.a[1]=self.a[self.n]
+        self.n-=1
+        self.restoreDownKey(1)
+        return maxVal
+
+    def restoreDownKey(self,i):
+        key=self.a[i]
+        lchild=2*i
+        rchild=(2*i)+1
+        #for odd no.of nodes
+        while rchild<=self.n:
+            if(key>=self.a[lchild] and key>=self.a[rchild]):
+                self.a[i]=key
+                return
+            else:
+                if self.a[lchild]>self.a[rchild]:
+                    self.a[i]=self.a[lchild]
+                    i=lchild
+                else:
+                    self.a[i]=self.a[rchild]
+                    i=rchild
+            lchild=2*i
+            rchild=lchild+1
+
+        #for even no of nodes
+        if lchild==self.n and key<self.a[lchild]:
+            self.a[i]=self.a[lchild]
+            i=lchild
+        self.a[i]=key
+
+    def displayHeap(self):
+        if self.n==0:
+            print("Heap is empty")
+            return
+        print("Heap size: ",self.n)
+        for i in range(1,self.n+1):
+            print(self.a[i],'',end='')
+        print()
+
+h=Heap(20)
+while True:
+    print("1.Insert in Heap")
+    print("2.Delete root")
+    print("3.Display")
+    print("4.Exit")
+    choice=int(input("Enter your choice: "))
+    if choice==1:
+        value=int(input("Enter a value for insertion: "))
+        h.insertnode(value)
+    elif choice==2:
+        print("Deleted max/root value is: ",h.deletenode())
+    elif choice==3:
+        h.displayHeap()
+    elif choice==4:
+        break
+    else:
+        print("Wrong choice!")
+
