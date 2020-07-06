@@ -7,3 +7,4 @@
 #### 4.Hashing
 #### 5.Searching
 #### 6.Binary Search Trees (BST)
+#### 7.Heap
